@@ -15,19 +15,27 @@ function createScore(){
 
 	score.portee = ctx.path(pathPortee);
 	score.clef = BASS;
+	var notes = [];
 	
-	score.addNote = function(Note){
-		switch(score.clef){
+	score.addNote = function(note){
+		notes.push(note);
+		var it = notes.length;
+		ctx.circle(it*20, 60-note*5, 5)
+/*		switch(score.clef){
 			case BASS:
 				
 			break;
-		}
+		}*/
 	}
 	
 	return score;	
 }
 
-createScore();
-
+var score = createScore();
+score.addNote(1);
+score.addNote(2);
+score.addNote(3);
+score.addNote(4);
+score.addNote(5);
 
 })();
