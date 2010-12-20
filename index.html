@@ -2,15 +2,30 @@
 <html>
 	<head>
 		<title>WebSolfege</title>
-		<script src="raphael.js" type="text/javascript" language="javascript" charset="utf-8" ></script>
-		
+		<script src="head.js" type="text/javascript" language="javascript" charset="utf-8" ></script>
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="no title" charset="utf-8" ></link>
 	</head>
 
 	<body>
-		<h1>Web solfege</h1>
-		<div id="partoche"></div>
+	  <div class="topPanel">
+		  <h1>Web solfege</h1>
+		
+		  <div id="partoche"></div>
+		</div>
+		
+		<div id="goodAnswer" class="feedback" style="display:none">Good!</div>
+		<div id="badAnswer" class="feedback" style="display:none">Wrong!</div>
+		
+		<div id="startPanel" class="bottomPanel">
+      <button id="start">Lancer une partie</button>
+		</div>
+		<div id="answers" class="bottomPanel">
+  		<button id="choix1" class="answer"></button>
+  		<button id="choix2" class="answer"></button>
+  		<button id="choix3" class="answer"></button>
+		<div>
 	</body>
-	
+  
 	<script src="webSolfege.js" type="text/javascript" language="javascript" charset="utf-8"></script>
 
 </html>
