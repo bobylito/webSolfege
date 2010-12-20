@@ -1,0 +1,11 @@
+*{padding:0; margin:0}
+
+.topPanel{position:absolute; top:0; left:0; width:100%; height:80%}
+.bottomPanel{position:absolute; bottom:0; left:0; width:100%; height:20%}
+
+.feedback{position:absolute;top:40%;bottom:40%;left:40%;right:40%;font-size:300%; }
+
+#startPanel button{width:100%; height:100%}
+
+#answers{display:none;}
+#answers button{position:relative; top:0; bottom:0;height:100%; width:33%}
