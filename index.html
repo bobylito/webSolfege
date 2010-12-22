@@ -9,20 +9,26 @@
 	<body>
 	  <div class="topPanel">
 		  <h1>Web solfege</h1>
+		</div>
 		
-		  <div id="partoche"></div>
+		<div class="middlePanel" id="partochePanel">
+				  <div id="partoche"></div>
+		</div>
+		
+		<div class="middlePanel" style="display:none;" id="pointPanel">
+		  <p>You got <span id="points">0</span> good answers (with a score of <span id="scoreWidth"></span> notes)</p>
 		</div>
 		
 		<div id="goodAnswer" class="feedback" style="display:none">Good!</div>
 		<div id="badAnswer" class="feedback" style="display:none">Wrong!</div>
 		
 		<div id="startPanel" class="bottomPanel">
-      <button id="start">Lancer une partie</button>
+      <button id="start">Start!</button>
 		</div>
 		<div id="answers" class="bottomPanel">
-  		<button id="choix1" class="answer" accesskey="1"></button>
-  		<button id="choix2" class="answer" accesskey="2"></button>
-  		<button id="choix3" class="answer" accesskey="3"></button>
+  		<button id="choix1" class="answer"></button>
+  		<button id="choix2" class="answer"></button>
+  		<button id="choix3" class="answer"></button>
 		<div>
 	</body>
   

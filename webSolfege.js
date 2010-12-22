@@ -1,8 +1,8 @@
 head.js("raphael.js","jquery-1.4.4.min.js");
 
 head.ready(function(){
-  var NB_NOTES_SCORE=30;
-  
+  var NB_NOTES_SCORE=20;
+  var SPACE_BTW_NOTES=30;
 
   function getRand(i){
     return Math.floor(Math.random()*i);
@@ -68,18 +68,22 @@ head.ready(function(){
 	
 	  score.addNote = function(valeurNote){
 		  var note = {
-			  valeur:valeurNote
+			  valeur:valeurNote,
+			  hidden:true
 		  };
 		  notes.push(note);
 		  var it = notes.length;
 		  note.noteDrawn = ctx.set();
 		  var isUp = (valeurNote>6);
-		  var queueNote = ctx.path("M"+(it*20+34)+" "+(60-valeurNote*5)+"L"+(it*20+34)+" "+(60-valeurNote*5+(22*(isUp?1:-1))));
+		  var X = it*SPACE_BTW_NOTES;
+		  var queueNote = ctx.path("M"+(X+34)+" "+(60-valeurNote*5)+"L"+(X+34)+" "+(60-valeurNote*5+(22*(isUp?1:-1))));
 		  note.noteDrawn.push(
-		    ctx.circle(it*20+30, 60-valeurNote*5, 4),
+		    ctx.circle(X+30, 60-valeurNote*5, 4),
 		    queueNote
 		  ).attr("fill","#000").attr("stroke","#000");
-		   
+		  
+		  var labelNote = ctx.text(X+30, 80, tradNotes[nb2Notes[valeurNote%7]]);
+		  
 		  note.changeValeur = function( nouvelleValeur ){
 		    if(isUp && nouvelleValeur<=6){
 		      queueNote.translate(0,-22);
@@ -90,8 +94,10 @@ head.ready(function(){
 		      }
 		    }
 		    isUp = nouvelleValeur>6;
-		    note.noteDrawn.translate(0 , (valeurNote-nouvelleValeur)*5);
+		    note.noteDrawn.translate(0 , (note.valeur-nouvelleValeur)*5);
 		    note.valeur = nouvelleValeur;
+		    labelNote.attr("text",tradNotes[nb2Notes[nouvelleValeur%7]]);
+		    note.isLabelHidden(true);
 		    return note;
 		  };
 		  note.select = function(){
@@ -102,6 +108,26 @@ head.ready(function(){
 		    note.noteDrawn.attr("fill","#000");
 		    return note;
 		  };
+		  note.changeLabelColor = function(color){
+		    labelNote.attr("stroke", color);
+		  }
+		  note.resetLabel = function(){
+		    labelNote.attr("stroke","#000");
+		    note.isLabelHidden(flase);
+		  }
+		  note.isLabelHidden = function(valueSetter){
+		    if(typeof valueSetter === "boolean" ){
+		      if(valueSetter){
+		        labelNote.hide();
+		      }
+		      else {
+		        labelNote.show();
+		      }
+		      note.hidden = valueSetter;
+		      return note;
+		    }
+		    return note.hidden;
+		  }
 		  return score;
 	  }
 	
@@ -114,7 +140,7 @@ head.ready(function(){
 	      current=idx;
 	      return score;
 	    }
-	    return current;
+	    return notes[current];
 	  };
 	  
 	  score.next = function(){
@@ -143,7 +169,7 @@ head.ready(function(){
 	  }
 	  
 	  score.hasNext = function(){
-	    current+1<notes.length;
+	    return current+1<notes.length;
 	  }
 	  
 	  for(var i = nbNotesInScore; i>0; i--){
@@ -154,6 +180,8 @@ head.ready(function(){
   }
 
   var score = createScore(NB_NOTES_SCORE);
+  
+  var points = 0;
   
   function refreshAnswers(){
     var ans = score.getQuestion();
@@ -167,7 +195,10 @@ head.ready(function(){
       score.changeValeur(i, getRand(11));
     }
     score.next();
+    points = 0;
     $("#answers").show();
+    $("#partochePanel").show();
+    $("#pointPanel").hide();
     $(this).hide();
     refreshAnswers();
   });
@@ -175,18 +206,34 @@ head.ready(function(){
   $(".answer").click(function(){
     var buttonClicked = $(this);
     
+    var lastNote = score.current().isLabelHidden(false);
     if(score.isAnswerRight(buttonClicked.val())){
-      $("#goodAnswer").show(100, function(){
-        $(this).hide(400);
+      lastNote.changeLabelColor("#0F0");
+      $("#goodAnswer").fadeIn(100, function(){
+        $(this).fadeOut(400);
+        points++;
       });
     }
     else{
-      $("#badAnswer").show(100, function(){
-        $(this).hide(400);
+      lastNote.changeLabelColor("#F00");
+      $("#badAnswer").fadeIn(100, function(){
+        $(this).fadeOut(400);
       });
     }
     
-    score.next();
-    refreshAnswers();
+    if(!score.hasNext()){
+      var panelPoint = $("#pointPanel");
+      panelPoint.find("#points").text(points);
+      panelPoint.find("#scoreWidth").text(NB_NOTES_SCORE);
+      $("#answers").hide();
+      $("#partochePanel").hide();
+      panelPoint.show();
+      $("#start").show();
+    }else{
+      score.next();
+      refreshAnswers();
+    }
+    
+    
   });
 });

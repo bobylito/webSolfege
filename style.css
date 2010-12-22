@@ -1,13 +1,33 @@
-*{padding:0; margin:0}
+/* Palette : http://www.colourlovers.com/palette/128467/Pink_Walrus
+Walrus (dark pink) : 9E1E4C
+Neon pink : FF1168
+Cool red : 25020F
+006 silver (dark grey): 8F8F8F
+Ferrari grey 2 : ECECEC
+*/
 
-.topPanel{position:absolute; top:0; left:0; width:100%; height:80%}
+@import url("http://fonts.googleapis.com/css?family=Allan:bold");
+@import url("http://fonts.googleapis.com/css?family=Ubuntu");
+
+*{padding:0; margin:0; color: #25020F;font-family: 'Ubuntu', arial, serif; font-size:110% }
+
+h1{color: #FF1168; line-height: 100px; font-size:80px; font-family: 'Allan', arial, serif; }
+button{font-size:300%;font-weight:bold}
+
+.topPanel{position:absolute; top:0; left:0; width:100%; height:100px; background-color: #9E1E4C;}
+.middlePanel{position:absolute; top:100px; left: 0; right:0; bottom: 100px;width: 100%; background:#ECECEC}
 .bottomPanel{position:absolute; bottom:0; left:0; width:100%; height:100px}
 
 .feedback{position:absolute;top:40%;bottom:40%;left:40%;right:40%;font-size:300%; }
 
 #startPanel button{width:100%; height:100px}
 
-#answers{display:none;}
-#answers button{position:relative; top:0; bottom:0;height:100px;font-size:300%; width:33%;font-weight:bold}
+#answers{display:none; background:#8F8F8F}
+#answers button{position:relative; top:10px; bottom:10px;height:80px; width:33%}
+
+#pointPanel{font-size:300%; text-align:center}
+
+#goodAnswer{color:#0F0}
+#badAnswer{color:#F00}
 
 svg{width:100%}
