@@ -3,6 +3,16 @@ head.js("raphael.js","jquery-1.4.4.min.js");
 head.ready(function(){
   var NB_NOTES_SCORE=20;
   var SPACE_BTW_NOTES=30;
+  var CURRENT_LANG="fr";
+  
+  var libelleNotesHandler = {
+    langs:{"en":{"A":"A", "B":"B", "C":"C", "D":"D", "E":"E", "F":"F", "G":"G"},
+      "fr":{"A":"La", "B":"Si", "C":"Do", "D":"Re", "E":"Mi", "F":"Fa", "G":"Sol"}
+    },
+    getTranslation: function(note){
+      return libelleNotesHandler.langs[CURRENT_LANG][note];
+    },
+  };
 
   function getRand(i){
     return Math.floor(Math.random()*i);
@@ -11,8 +21,7 @@ head.ready(function(){
   function createScore(nbNotesInScore){
 	  var score = {}, 
 	    current = -1, 
-	    ctx = Raphael("partoche", 600, 200), 
-	    tradNotes = {"A":"La", "B":"Si", "C":"Do", "D":"Re", "E":"Mi", "F":"Fa", "G":"Sol"},
+	    ctx = Raphael("partoche", 600, 120),
 	    nb2Notes = ["E","F","G","A","B","C","D"];
 	  
 	  var pathPortee = "";
@@ -82,7 +91,7 @@ head.ready(function(){
 		    queueNote
 		  ).attr("fill","#000").attr("stroke","#000");
 		  
-		  var labelNote = ctx.text(X+30, 80, tradNotes[nb2Notes[valeurNote%7]]);
+		  var labelNote = ctx.text(X+30, 80, libelleNotesHandler.getTranslation(nb2Notes[valeurNote%7]));
 		  
 		  note.changeValeur = function( nouvelleValeur ){
 		    if(isUp && nouvelleValeur<=6){
@@ -96,7 +105,7 @@ head.ready(function(){
 		    isUp = nouvelleValeur>6;
 		    note.noteDrawn.translate(0 , (note.valeur-nouvelleValeur)*5);
 		    note.valeur = nouvelleValeur;
-		    labelNote.attr("text",tradNotes[nb2Notes[nouvelleValeur%7]]);
+		    labelNote.attr("text",libelleNotesHandler.getTranslation(nb2Notes[nouvelleValeur%7]));
 		    note.isLabelHidden(true);
 		    return note;
 		  };
@@ -109,10 +118,10 @@ head.ready(function(){
 		    return note;
 		  };
 		  note.changeLabelColor = function(color){
-		    labelNote.attr("stroke", color);
+		    labelNote.attr("fill", color);
 		  }
 		  note.resetLabel = function(){
-		    labelNote.attr("stroke","#000");
+		    labelNote.attr("fill","#000");
 		    note.isLabelHidden(flase);
 		  }
 		  note.isLabelHidden = function(valueSetter){
@@ -165,7 +174,7 @@ head.ready(function(){
 	  }
 	  
 	  score.getLibelle4Note = function(note){
-	    return tradNotes[note];
+	    return libelleNotesHandler.getTranslation(note);
 	  }
 	  
 	  score.hasNext = function(){
@@ -191,6 +200,8 @@ head.ready(function(){
   }
   
   $("#start").click(function(){
+    $("#intro").fadeOut(400);
+  
     for(var i=NB_NOTES_SCORE-1; i>-1; i--){
       score.changeValeur(i, getRand(11));
     }
