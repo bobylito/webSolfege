@@ -1,6 +1,9 @@
 head.js("raphael.js","jquery-1.4.4.min.js");
 
 head.ready(function(){
+  
+  window.scrollTo(0,0);
+  
   var NB_NOTES_SCORE=20;
   var SPACE_BTW_NOTES=30;
   var CURRENT_LANG="fr";

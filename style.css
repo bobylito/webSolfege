@@ -11,6 +11,8 @@ Ferrari grey 2 : ECECEC
 
 *{padding:0; margin:0; color: #25020F;font-family: 'Ubuntu', arial, serif; font-size:110% }
 
+body{height:320px; width:480px; -webkit-transform:scale(1)}
+
 h1{color: #FF1168; line-height: 100px; font-size:80px; font-family: 'Allan', arial, serif;text-shadow: 4px 4px 4px #25020F; padding-left: 10px; }
 button{font-size:300%;font-weight:bold}
 
@@ -22,7 +24,7 @@ button{font-size:300%;font-weight:bold}
 
 .help{border-radius:20px; background:#CCC; padding:10px; border: 5px solid #9E1E4C; text-align:justify;}
 
-#partochePanel p {position:relative; top:0; width: 300px; margin:auto;}
+#partochePanel p {width: 80%; margin:auto;}
 #partoche {height:130px;}
 
 #startPanel button{width:100%; height:100px}
